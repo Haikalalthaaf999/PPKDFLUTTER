@@ -1,5 +1,4 @@
-
-import 'package:belajar_flutter/meet_2.dart/tugas2_flutter.dart';
+import 'package:belajar_flutter/meet_4/tugas4_flutter.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -33,7 +32,9 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
       // home:TugasSatu(),
-      home:TugasDua()
+      // home:TugasTiga()
+      // home: Meet3a()
+      home: TugasEmpat(),
     );
   }
 }
