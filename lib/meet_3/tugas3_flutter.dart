@@ -178,7 +178,7 @@ class TugasTiga extends StatelessWidget {
                       borderRadius: BorderRadius.circular(8.0),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.grey.withOpacity(0.3),
+                          color: Colors.grey,
                           spreadRadius: 2,
                           blurRadius: 5,
                           offset: const Offset(0, 3),
@@ -192,7 +192,7 @@ class TugasTiga extends StatelessWidget {
                           bottom: 8.0, // Jarak label dari bawah
                           left: 8.0, // Jarak label dari kiri
                           child: Text(
-                            'Kotak ${index + 1}', // Label dinamis
+                            'Kotak ${index + 1}', // Label dinamis                               
                             style: const TextStyle(
                               color: Colors.white,
                               fontSize: 16,
