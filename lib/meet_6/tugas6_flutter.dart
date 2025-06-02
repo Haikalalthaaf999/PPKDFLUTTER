@@ -1,3 +1,5 @@
+import 'package:belajar_flutter/meet_2/tugas2_flutter.dart';
+import 'package:belajar_flutter/meet_5/tugas5_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -47,7 +49,7 @@ class _TugasEnamState extends State<TugasEnam> {
           // ),
           SingleChildScrollView(
             child: Column(
-              children: [
+              children: [         
                 const SizedBox(height: 80),
                 Text(
                   "Hallo!",
@@ -55,7 +57,7 @@ class _TugasEnamState extends State<TugasEnam> {
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     fontSize: 40,
-                      shadows: [
+                    shadows: [
                       Shadow(
                         offset: Offset(2, 2),
                         blurRadius: 4,
@@ -71,7 +73,7 @@ class _TugasEnamState extends State<TugasEnam> {
                     color: Colors.white,
                     fontWeight: FontWeight.normal,
                     fontSize: 14,
-                      shadows: [
+                    shadows: [
                       Shadow(
                         offset: Offset(2, 2),
                         blurRadius: 4,
@@ -101,7 +103,7 @@ class _TugasEnamState extends State<TugasEnam> {
                         controller: usernameController,
                         style: const TextStyle(color: Colors.white),
                         decoration: InputDecoration(
-                          hintText: "Haikal Althaaf Firoos",
+                          hintText: "Agus Setiawan",
                           hintStyle: const TextStyle(color: Colors.white54),
                           filled: true,
                           fillColor: Colors.grey[900],
@@ -157,8 +159,12 @@ class _TugasEnamState extends State<TugasEnam> {
                             ),
                           ),
                           onPressed: () {
-                            print("Username: ${usernameController.text}");
-                            print("Password: ${passwordController.text}");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const TugasLima(),
+                              ),
+                            );
                           },
                           child: const Text(
                             "Login",
@@ -236,35 +242,44 @@ class _TugasEnamState extends State<TugasEnam> {
                           SizedBox(
                             width: 87,
                             height: 60,
-                            child:ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xff111111),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.elliptical(10, 10),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xff111111),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.elliptical(10, 10),
+                                  ),
                                 ),
                               ),
+                              onPressed: () {
+                                Navigator.pushNamed(context, "/tugas2");
+                              },
+                              child: Image.asset('assets/images/apple.png'),
                             ),
-                            onPressed: (){}, 
-                          child: Image.asset('assets/images/apple.png'),
-                          ),
                           ),
                           const SizedBox(width: 32),
                           SizedBox(
                             width: 90,
                             height: 60,
-                            child:ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color(0xff111111),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.all(
-                                  Radius.elliptical(10, 10),
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xff111111),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.elliptical(10, 10),
+                                  ),
                                 ),
                               ),
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => TugasDua(),
+                                  ),
+                                );
+                              },
+                              child: Image.asset('assets/images/twiter.png'),
                             ),
-                            onPressed: (){}, 
-                          child: Image.asset('assets/images/twiter.png'),
-                          ),
                           ),
                         ],
                       ),

@@ -20,6 +20,7 @@ class MyApp extends StatelessWidget {
 // Main screen widget
 class TugasTiga extends StatelessWidget {
   const TugasTiga({super.key});
+  static const id = '/TugasTiga';
 
   @override
   Widget build(BuildContext context) {

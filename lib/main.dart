@@ -1,5 +1,7 @@
-
-import 'package:belajar_flutter/meet_5/tugas5_flutter.dart';
+import 'package:belajar_flutter/meet_14/meet_14.dart';
+import 'package:belajar_flutter/meet_2/tugas2_flutter.dart';
+import 'package:belajar_flutter/meet_3/tugas3_flutter.dart';
+import 'package:belajar_flutter/meet_8/tugas8_flutter.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -13,6 +15,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      initialRoute: "/",
+      routes: {
+        //Harus didaftarkan dulu disini
+        // "/": (context) => TugasSatu(),
+        "/tugas2": (context) => TugasDua(),
+        TugasTiga.id: (context) => TugasTiga(),
+      },
       title: 'Flutter Demo',
       theme: ThemeData(
         // This is the theme of your application.
@@ -30,12 +39,13 @@ class MyApp extends StatelessWidget {
         //
         // This works for code too, not just values: Most code changes can be
         // tested with just a hot reload.
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
       ),
+
       // home:TugasSatu(),
       // home:TugasTiga()
       // home: Meet3a()
-      home:TugasLima()
+      home: Tugas14(),
     );
   }
 }

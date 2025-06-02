@@ -7,8 +7,8 @@ class TugasDua extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange,
-        title: Text("Profil Lengkap"),
+        backgroundColor: Color(0xFF454545),
+        title: Text("Profil Lengkap", style: TextStyle(color: Color(0xffFFA559))),
       ),
       body: Column(
         children: [
@@ -261,9 +261,9 @@ class TugasDua extends StatelessWidget {
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
-                  Colors.orange,
-                  Colors.orangeAccent,
-                  Colors.deepOrangeAccent,
+                  Color(0xFF454545),
+                  Color(0xFF454565),
+                  Color(0xFF454545),
                 ],
                 begin: Alignment.topRight,
                 end: Alignment.bottomRight,
