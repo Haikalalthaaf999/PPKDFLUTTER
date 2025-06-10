@@ -32,4 +32,12 @@ class DBHelper {
     final List<Map<String, dynamic>> maps = await db.query('jadwal');
     return List.generate(maps.length, (i) => JadwalBus.fromMap(maps[i]));
   }
+  static Future<void> deleteJadwal(int id) async {
+    final db = await DBHelper.db();
+    await db.delete('jadwal', where: 'id = ?', whereArgs: [id]);
+  }
+  static Future<void> updateJadwal(JadwalBus jadwal) async {
+    final db = await DBHelper.db();
+    await db.update('jadwal', jadwal.toMap(), where: 'id = ?', whereArgs: [jadwal.id]);
+  }
 }

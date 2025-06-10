@@ -1,6 +1,6 @@
+import 'package:flutter/material.dart';
 import 'package:belajar_flutter/Tugas 11/database/db_helper.dart';
 import 'package:belajar_flutter/Tugas 11/model/bus_model.dart';
-import 'package:flutter/material.dart';
 
 class JadwalPage extends StatefulWidget {
   const JadwalPage({super.key});
@@ -18,6 +18,7 @@ class _JadwalPageState extends State<JadwalPage> {
   TimeOfDay? selectedTime;
 
   List<JadwalBus> jadwalBusList = [];
+  JadwalBus? _jadwalYangDiedit;
 
   @override
   void initState() {
@@ -39,19 +40,33 @@ class _JadwalPageState extends State<JadwalPage> {
       final rute = ruteController.text;
       final waktu = waktuController.text;
 
-      await DBHelper.insertJadwal(
-        JadwalBus(nama: nama, kelas: kelas, rute: rute, waktu: waktu),
-      );
+      if (_jadwalYangDiedit != null) {
+        final updatedJadwal = JadwalBus(
+          id: _jadwalYangDiedit!.id,
+          nama: nama,
+          kelas: kelas,
+          rute: rute,
+          waktu: waktu,
+        );
+        await DBHelper.updateJadwal(updatedJadwal);
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('✅ Jadwal berhasil diperbarui')),
+        );
+      } else {
+        await DBHelper.insertJadwal(
+          JadwalBus(nama: nama, kelas: kelas, rute: rute, waktu: waktu),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('✅ Jadwal berhasil disimpan')),
+        );
+      }
 
+      // Reset
+      _jadwalYangDiedit = null;
       nameController.clear();
       kelasController.clear();
       ruteController.clear();
       waktuController.clear();
-
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('✅ Jadwal berhasil disimpan')),
-      );
-
       muatData();
     }
   }
@@ -65,7 +80,7 @@ class _JadwalPageState extends State<JadwalPage> {
           ' Jadwal Bus Sekolah',
           style: TextStyle(color: Color(0xffAFDDFF)),
         ),
-        backgroundColor: Color(0xff60B5FF),
+        backgroundColor: const Color(0xff60B5FF),
         elevation: 4,
       ),
       body: SingleChildScrollView(
@@ -103,13 +118,11 @@ class _JadwalPageState extends State<JadwalPage> {
                       controller: nameController,
                       label: 'Nama Penumpang',
                       icon: Icons.person,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Nama wajib diisi';
-                        }
-                        return null;
-                      },
-                     
+                      validator:
+                          (value) =>
+                              value == null || value.isEmpty
+                                  ? 'Nama wajib diisi'
+                                  : null,
                     ),
                     const SizedBox(height: 10),
                     _buildInput(
@@ -117,24 +130,22 @@ class _JadwalPageState extends State<JadwalPage> {
                       label: 'Kelas',
                       icon: Icons.class_,
                       keyboardType: TextInputType.number,
-                     validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Kelas wajib diisi';
-                        }
-                        return null;
-                      },
+                      validator:
+                          (value) =>
+                              value == null || value.isEmpty
+                                  ? 'Kelas wajib diisi'
+                                  : null,
                     ),
                     const SizedBox(height: 10),
                     _buildInput(
                       controller: ruteController,
                       label: 'Rute',
                       icon: Icons.map,
-                     validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Rute wajib diisi';
-                        }
-                        return null;
-                      },
+                      validator:
+                          (value) =>
+                              value == null || value.isEmpty
+                                  ? 'Rute wajib diisi'
+                                  : null,
                     ),
                     const SizedBox(height: 10),
                     TextFormField(
@@ -155,7 +166,7 @@ class _JadwalPageState extends State<JadwalPage> {
                       decoration: InputDecoration(
                         labelText: 'Waktu',
                         prefixIcon: const Icon(Icons.access_time),
-                        fillColor: Color(0xffFFECDB),
+                        fillColor: const Color(0xffFFECDB),
                         filled: true,
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -163,14 +174,18 @@ class _JadwalPageState extends State<JadwalPage> {
                       ),
                       validator:
                           (v) =>
-                              (v == null || v.isEmpty)
+                              v == null || v.isEmpty
                                   ? 'Waktu wajib dipilih'
                                   : null,
                     ),
                     const SizedBox(height: 14),
                     ElevatedButton.icon(
                       icon: const Icon(Icons.save),
-                      label: const Text('Simpan Jadwal'),
+                      label: Text(
+                        _jadwalYangDiedit != null
+                            ? 'Perbarui Jadwal'
+                            : 'Simpan Jadwal',
+                      ),
                       onPressed: simpanData,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white,
@@ -213,6 +228,40 @@ class _JadwalPageState extends State<JadwalPage> {
                   ),
                   title: Text('${item.nama} (Kelas ${item.kelas})'),
                   subtitle: Text('Rute: ${item.rute} • Waktu: ${item.waktu}'),
+                  trailing: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.edit, color: Colors.green),
+                        onPressed: () {
+                          setState(() {
+                            _jadwalYangDiedit = item;
+                            nameController.text = item.nama;
+                            kelasController.text = item.kelas.toString();
+                            ruteController.text = item.rute;
+                            waktuController.text = item.waktu;
+                          });
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Edit jadwal: ${item.nama}'),
+                            ),
+                          );
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.delete, color: Colors.red),
+                        onPressed: () async {
+                          await DBHelper.deleteJadwal(item.id!);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text('Jadwal ${item.nama} dihapus'),
+                            ),
+                          );
+                          muatData();
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -236,7 +285,7 @@ class _JadwalPageState extends State<JadwalPage> {
         labelText: label,
         prefixIcon: Icon(icon),
         filled: true,
-        fillColor: Color(0xffFFECDB),
+        fillColor: const Color(0xffFFECDB),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
       ),
       validator: validator,
